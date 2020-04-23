@@ -1,0 +1,9 @@
+<!-- <h3>{{widget.name}}</h3> -->
+<!-- Tienes que investigar como redimensionar dinamicamente el widget -->
+<div style="width: 100%; height: 500px;">
+    <div #sizeRef>
+        <google-chart style="width: 100%; height: 500px;" [title]="chart.title" [type]="chart.type" [data]="chart.data" [columnNames]="chart.columnNames" [roles]="chart.roles" [options]="chart.options" (ready)="onReady()" (select)="onSelect($event)" (error)="onError($event)" (mouseenter)="onMouseEnter($event)"
+            (mouseleave)="onMouseLeave($event)">
+        </google-chart>
+    </div>
+</div>

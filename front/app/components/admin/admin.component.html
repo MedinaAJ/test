@@ -1,0 +1,53 @@
+<!-- Banner del menu de administracion de la web -->
+
+
+<!-- Contenido -->
+<div *ngIf="this.admin" class="content-admin">
+    <!-- Barra de navegacion del menu de administracion-->
+    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 navMenuContent">
+
+        <img src="/assets/img/logo.png" alt="logo" class="logoBar">
+
+        <div class="avatar">A</div>
+
+        <mat-list class="navMenuBar" #mainNavBar>
+            <mat-list-item [routerLinkActive]="['active']">
+                <a [routerLink]="['/admin/inicio']">
+                     <mat-icon class="icono">dashboard</mat-icon>
+                </a>
+            </mat-list-item>
+            <mat-list-item  [routerLinkActive]="['active']">
+                <a [routerLink]="['/admin/usuarios']">
+                    <mat-icon class="icono">perm_contact_calendar</mat-icon>
+                </a>
+            </mat-list-item>
+            <mat-list-item  [routerLinkActive]="['active']">
+                <a [routerLink]="['/admin/instalaciones']">
+                     <mat-icon class="icono">router</mat-icon>
+                </a>
+            </mat-list-item>
+            <mat-list-item  [routerLinkActive]="['active']">
+                <a class="logout" (click)="logout()">
+                    <mat-icon style="color: red;" class="icono">exit_to_app</mat-icon>
+                </a>
+            </mat-list-item>
+        </mat-list>
+        <!--
+        <div class="logout" (click)="logout()">
+            <mat-icon class="icono">exit_to_app</mat-icon>
+            Cerrar sesión
+        </div>-->
+
+    </div>
+ 
+    <div class="col-lg-11 col-md-11 col-sm-0 col-xs-0" class="mainContent">
+        <div style="position: relative;">
+            <div class="shadow"></div>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<div *ngIf="!this.admin" class="content-admin">
+    <h1>Acceso no autorizado</h1>
+</div>

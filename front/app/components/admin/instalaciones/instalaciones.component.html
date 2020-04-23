@@ -1,0 +1,27 @@
+
+<div class="row mainHeadSection">
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+		<div class="col-lg-10 noPadding">
+            <span class="breadCrumb">Administrador / </span><br>
+            <h1>Instalaciones</h1>
+		
+			<div class="buttonRow">
+                <a [routerLink]="['/admin/instalaciones/crear-instalacion']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon> Crear Instalacion</button></a>		
+            </div>
+        </div> 	
+	</div>	
+</div>
+
+<div class="row pageSectionContent">
+    <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+        <div *ngIf="this.datos_instalaciones">
+            <app-listado ruta="/admin/instalaciones/editar-instalacion/" [interfaz]="this.columnas_instalaciones" [titulo]="this.nombre_columnas_instalaciones" [datos]="this.datos_instalaciones.instalacione"></app-listado>
+        </div>
+        <div *ngIf="!this.datos_instalaciones">
+            <h2>No hay datos que mostrar</h2>    
+        </div>
+    </div>
+    
+</div>
+
+

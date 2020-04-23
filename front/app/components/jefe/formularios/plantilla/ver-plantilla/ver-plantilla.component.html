@@ -1,0 +1,163 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-10 noPadding">
+            <span class="breadCrumb">{{ this.identity.firstname }} / Formularios / Plantillas </span>
+            <h1>Vista previa de {{this.nombre_plantilla}}</h1>
+
+            <div class="buttonRow">
+				<a (click)="backToForms()"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+				
+				<a (click)="editTemplate()"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">edit</mat-icon> Editar Plantilla</button></a>
+
+				<a (click)="deleteTemplate()"><button mat-raised-button class="primaryButton delete"><mat-icon class="iconButton">delete</mat-icon> Eliminar Plantilla</button></a>		
+
+			</div>
+        </div>
+        <div class="col-lg-2 noPadding">
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="row infoSectionContainer">
+    <div class="infoSection col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 ">
+        <div class="col-lg-10 noPadding">
+
+            <span>ID: #01</span>
+
+            <!-- Por simplicidad de momento el grupo va a ser = 1 hasta que esto funcione como debe 
+            <mat-form-field>
+                <mat-select placeholder="Seleccionar grupo" name="SelectPlantillas" [(ngModel)]="selected_plantillas" multiple #selectionPlantillasModel="ngModel">
+                    <app-select-check-all [model]="selectionPlantillasModel" [values]="options_plantillas">
+                    </app-select-check-all>
+                    <mat-option *ngFor="let option of options_plantillas" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>-->
+
+        </div>
+    </div>
+</div>
+<p>Nombre plantilla {{this.nombre_plantilla}}</p>
+<div class="row pageSectionContent">
+
+    <!-- header -->
+    <div *ngIf="header && header != 'null'">
+        <img src="{{url + 'get-header-template/' + header}}" style="height:50px;"/>
+    </div>
+    <!-- /header -->
+
+    <!-- Div necesario para crear bloques iterativamente -->
+    <div *ngFor='let block of blocks'>
+        <!-- bloque de formulario -->
+        <div class="row formBlock">
+
+            <!-- nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+                <p>Nombre Bloque {{block.value}}</p>
+
+
+            </div>
+            <!-- /nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+                <!-- Div necesario para crear elementos en los bloques iterativamente -->
+                <div *ngFor='let element of block.elements'>
+
+                    <!-- caso añadir campo vacio de texto -->
+                    <div *ngIf="this.opService.isText(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="text" placeholder="{{element.value}}">
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- /caso añadir campo vacio de texto -->
+
+                    <!-- caso radio button -->
+                    <div *ngIf="this.opService.isRadio(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-radio-group *ngFor='let option of element.options'>
+                                <mat-radio-button></mat-radio-button><span><strong>{{option}}&nbsp;&nbsp;&nbsp;</strong></span>
+                                <br>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <!-- /caso radio button -->
+
+                    <!-- caso añadir boton de subir -->
+                    <div *ngIf="this.opService.isFile(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <div class="primaryButton cancel">
+                                <h1>{{element.value}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /caso añadir boton de subir -->
+
+                    <!-- caso crear lista -->
+                    <div *ngIf="this.opService.isList(element) " class="row formRow editing ">
+                        <div class="col-lg-11 ">
+                            <mat-radio-group *ngFor='let option of element.options'>
+                                <mat-icon>arrow_right_alt</mat-icon><span><strong>{{option}}&nbsp;&nbsp;&nbsp;</strong></span>
+                                <br>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <!-- /caso crear lista -->
+
+                    <!-- caso campo numérico -->
+                    <div *ngIf="this.opService.isNumber(element) " class="row formRow editing ">
+                        <div class="col-lg-11 ">
+                            <mat-form-field>
+                                <input matInput type="number " placeholder="{{element.value}} ">
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- /caso campo numérico -->
+
+                    <!-- caso campo firma -->
+                    <div *ngIf="this.opService.isFirma(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+
+                            <canvas style="background-color: white; border: black 1px solid;" #canvas></canvas>
+                        </div>
+                    </div>
+                    <!-- /caso campo firma -->
+
+                    <!-- caso campo Imagen -->
+                    <div *ngIf="this.opService.isImagen(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="text" placeholder="{{ element.value }}">
+
+                            </mat-form-field>
+                            <a href=""><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Subir imagen</button></a>
+                        </div>
+                    </div>
+                    <!-- /caso campo imagen -->
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- /bloque de formulario -->
+    </div>
+
+
+<!-- footer -->
+<div *ngIf="footer && footer != 'null'">
+    <img src="{{url + 'get-footer-template/' + footer}}" style="height:50px;"/>
+</div>
+<!-- /footer -->
+</div>

@@ -1,0 +1,34 @@
+
+<div class="row mainHeadSection">
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+		<div class="col-lg-10 noPadding">
+            <span class="breadCrumb">Administrador / </span><br>
+            <h1>Usuarios</h1>
+		
+			<div class="buttonRow">
+                <a [routerLink]="['/admin/usuarios/crear-usuario']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon> Crear Usuario</button></a>		
+                <a [routerLink]="['/admin/usuarios/crear-empresa']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon> Crear Empresa</button></a>		
+			</div>
+        </div> 	
+	</div>	
+	
+</div>
+
+<div class="row pageSectionContent">
+    <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+        <mat-tab-group>
+            <!-- Tab Plantillas -->
+        
+            <mat-tab *ngIf="this.datos_empleados" label="Usuarios">
+                <app-listado ruta="/admin/usuarios/editar-usuario/" [interfaz]="this.columnas_empleados" [titulo]="this.nombre_columnas_empleados" [datos]="this.datos_empleados.empleados"></app-listado>
+            </mat-tab>
+         
+            <mat-tab *ngIf="this.datos_empresa" label="Empresas">
+                <app-listado ruta="/admin/usuarios/editar-empresa/" [interfaz]="this.columnas_empresa" [titulo]="this.nombre_columnas_empresa" [datos]="this.datos_empresa.empresa"></app-listado>
+            </mat-tab>
+        
+        </mat-tab-group>
+    </div>
+    
+</div>
+

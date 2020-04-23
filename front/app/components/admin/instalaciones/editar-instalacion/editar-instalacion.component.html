@@ -1,0 +1,81 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-12 noPadding">
+            <span class="breadCrumb">Administrador / Instalaciones /</span>
+            <h1>Editar Instalación</h1>
+
+            <div class="buttonRow">
+
+                <a [routerLink]="['/admin/instalaciones']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+                <a [routerLink]="['/admin/instalaciones']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>
+                <a *ngIf="this.instalacion" [routerLink]="['/admin/instalaciones/editar-panel/'+this.instalacion.id_panel]"><button mat-raised-button class="primaryButton"><mat-icon class="iconButton">save</mat-icon>Editar Panel</button></a>
+                <a *ngIf="this.instalacion" [routerLink]="['/admin/instalaciones/ver-panel/'+this.instalacion.id_panel]"><button mat-raised-button class="primaryButton"><mat-icon class="iconButton">add</mat-icon>Ver Panel</button></a>
+                <button mat-raised-button class="primaryButton" (click)="eliminarInstalacion()"><mat-icon class="iconButton">cancel</mat-icon>Eliminar Instalacion</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<form #createNewInstalacion="ngForm" autocomplete="off">
+
+    <div class="row pageSectionContent">
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Selecciona la empresa a la que pertenece la nueva instalación</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <mat-form-field>
+                <mat-select placeholder="Seleccionar empresa" name="SelectEmpresas" [(ngModel)]="selected_empresas" #selectionEmpresasModel="ngModel">
+                    <mat-option *ngFor="let option of options_empresas" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <p>¿La empresa no esta creada?</p>
+            <a [routerLink]="['/admin/usuarios/crear-empresa']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">add</mat-icon> Crear empresa</button></a>
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Datos de la nueva instalación</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <mat-form-field>
+                <input matInput type="text" #nombre="ngModel" name="name" [(ngModel)]="instalacion.name" placeholder="Nombre" required>
+                <mat-error *ngIf="nombre.invalid">El nombre es necesario para crear la nueva instalación</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #localidadfr="ngModel" name="localidad" [(ngModel)]="instalacion.localidad" placeholder="Localidad" required>
+                <mat-error *ngIf="localidadfr.invalid">La localidad es necesaria para crear una nueva instalación</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #provinciafr="ngModel" name="provincia" [(ngModel)]="instalacion.provincia" placeholder="Provincia" required>
+                <mat-error *ngIf="provinciafr.invalid">La provincia es necesaria para crear una nueva instalación</mat-error>
+            </mat-form-field>
+
+        </div>
+
+        <div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <div class="buttonRow right ">
+                <button mat-raised-button class="primaryButton" (click)="editarInstalacion()" type="submit" [disabled]="!createNewInstalacion.form.valid"><mat-icon class="iconButton">save</mat-icon>Guardar Cambios</button>
+            </div>
+            <div *ngIf="!createNewInstalacion.form.valid">
+                <p>
+                    Rellena todos los campos
+                </p>
+            </div>
+        </div>
+    </div>
+</form>

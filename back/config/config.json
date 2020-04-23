@@ -1,0 +1,27 @@
+{
+    "development": {
+        "username": "dequosolprod",
+        "password": "DmMd$AlfR-2020",
+        "database": "dequosol_prod",
+        "host": "vl22690.dinaserver.com",
+        "dialect": "mysql",
+        "operatorsAliases": false
+    },
+    "test": {
+        "username": "dequosolprod",
+        "password": "DmMd$AlfR-2020",
+        "database": "dequosol_prod",
+        "host": "vl22690.dinaserver.com",
+        "dialect": "mysql",
+        "operatorsAliases": false
+    },
+    "production": {
+        "username": "dequosolprod",
+        "password": "DmMd$AlfR-2020",
+        "database": "dequosol_prod",
+        "host": "vl22690.dinaserver.com",
+        "dialect": "mysql",
+        "operatorsAliases": false
+    },
+    "token_secret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+}

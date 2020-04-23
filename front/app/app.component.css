@@ -1,0 +1,653 @@
+:host ::ng-deep .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+/* Cabeceras */
+
+:host ::ng-deep .mainHeadSection {
+    margin-top: 6vh;
+    min-height: 14vh;
+}
+
+
+/* ajuste tabs */
+
+:host ::ng-deep .mainHeadSection.tabs {
+    min-height: 18vh;
+    z-index: 100;
+}
+
+
+/* fin de ajuste */
+
+:host ::ng-deep .mainHeadSection h1 {
+    font-size: 30px;
+    margin-top: 0px;
+    color: #0a2c4a;
+}
+
+:host ::ng-deep .breadCrumb {
+    color: #c9c9c9;
+    font-weight: bold;
+}
+
+:host ::ng-deep .infoSectionContainer {
+    min-height: 14vh;
+    background-color: #f5f7f8;
+}
+
+:host ::ng-deep .infoSection {
+    border-radius: 0px 0px 5px 5px;
+    /* margin-top: 45px; */
+    padding: 33px;
+    background: #ffffff;
+    border: 6px solid #eee;
+    border-top: 0px solid #ccc;
+}
+
+:host ::ng-deep .infoSection span {
+    font-size: 14px;
+    color: #9a9a9a;
+}
+
+
+/* atajos */
+
+.center {
+    text-align: center;
+}
+
+
+/* Login */
+
+:host ::ng-deep .fullPageContainer {
+    width: 100%;
+    height: 100vh;
+}
+
+:host ::ng-deep .cornerImage {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    max-width: 600px;
+}
+
+:host ::ng-deep .logoLogin {
+    text-align: center;
+    margin: auto;
+    padding-bottom: 20px;
+}
+
+
+/* Contenidos */
+
+:host ::ng-deep .pageSectionContent {
+    background-color: #f5f7f8;
+    min-height: 80vh;
+}
+
+:host ::ng-deep .pageSectionContentContainer:first-child {
+    margin-top: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 21px;
+}
+
+:host ::ng-deep .pageSectionContentContainer {
+    margin-top: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 21px;
+    padding-bottom: 15px;
+}
+
+:host ::ng-deep .pageSectionContentContainer:last-child {
+    margin-bottom: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 21px;
+    padding-bottom: 20px;
+}
+
+
+/* Ajustes en contenedores para tabs */
+
+:host ::ng-deep .pageSectionContentContainer.tabs {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 0px!important;
+    margin-top: -42px;
+}
+
+:host ::ng-deep .pageSectionContent.tabs {
+    background-color: #f5f7f8;
+    min-height: 80vh;
+    padding: 0px;
+}
+
+
+/* fin de ajustes en contenedores */
+
+:host ::ng-deep .blueContainer {
+    background: rgb(53, 152, 191);
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(53, 152, 191, 1) 0%, rgba(53, 145, 191, 1) 56%, rgba(51, 121, 183, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(53, 152, 191, 1) 0%, rgba(53, 145, 191, 1) 56%, rgba(51, 121, 183, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(53, 152, 191, 1) 0%, rgba(53, 145, 191, 1) 56%, rgba(51, 121, 183, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#3598bf', endColorstr='#3379b7', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+}
+
+:host ::ng-deep .transparentContainer {
+    background: transparent;
+}
+
+:host ::ng-deep .pageSectionContent h2 {
+    font-size: 20px;
+    margin-top: 0px;
+    color: #0a2c4a;
+}
+
+
+/* TABLAS ::::::: */
+
+:host ::ng-deep .mat-table {
+    box-shadow: none;
+}
+
+:host ::ng-deep .noPadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+/* Editor de formularios */
+
+:host ::ng-deep .pageSectionContentContainer.createBlock {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+:host ::ng-deep .pageSectionContentContainer.createBlock button {
+    position: absolute;
+    top: 42px;
+}
+
+:host ::ng-deep .pageSectionContentContainer {
+    margin-top: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 21px;
+    padding-bottom: 15px;
+}
+
+:host ::ng-deep .pageSectionContentContainer:last-child {
+    margin-bottom: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 21px;
+    padding-bottom: 20px;
+}
+
+:host ::ng-deep .formRow {
+    margin-bottom: 5px;
+}
+
+:host ::ng-deep .formBlock {
+    background: #eee;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+:host ::ng-deep .editing {
+    background-color: #efdaad42;
+    border-radius: 5px;
+}
+
+:host ::ng-deep .deleteBlock {
+    position: absolute;
+    bottom: -20px;
+}
+
+
+/* Estilos para que la tabla se vea expandida */
+
+:host ::ng-deep table {
+    width: 100%;
+}
+
+:host ::ng-deep .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+
+/* MENU */
+
+:host ::ng-deep .avatar {
+    background-color: #ff7600a8;
+    font-weight: 400;
+    width: 35px;
+    border-radius: 50px;
+    height: 35px;
+    padding: 5px;
+    margin-top: 30px;
+    color: #fff;
+    font-size: 18px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+:host ::ng-deep .avatar.color {}
+
+:host ::ng-deep .navMenuContent {
+    margin-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    height: 100vh;
+    background: #fff;
+    text-align: center;
+    max-width: 75px;
+}
+
+:host ::ng-deep .navMenuBar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 40px;
+    margin-left: 0px;
+}
+
+:host ::ng-deep li .icono {
+    color: #807f7f;
+}
+
+:host ::ng-deep .active mat-icon {
+    color: #337ab7;
+}
+
+:host ::ng-deep .navMenuBar li a {
+    display: block;
+    padding: 0px 10px 0px 10px;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+:host ::ng-deep .navMenuContent a{
+  color: #999;
+
+}
+
+:host ::ng-deep .navMenuContent .active {
+   
+     color: #337ab7;
+       border-left: 2px solid #337ab7;
+}
+
+
+
+:host ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+    display: grid;
+    padding-bottom: 0px;
+}
+
+
+
+:host ::ng-deep .mat-icon.menuBar {
+    height: 35px;
+    width: 38px;
+    font-size: 35px;
+    vertical-align: middle;
+}
+
+:host ::ng-deep span.menuBar {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+:host ::ng-deep .content-admin {
+    position: absolute;
+    top: 00px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow: hidden;
+    background: #fff;
+    overflow-y: scroll;
+}
+
+:host ::ng-deep .mainContent {
+    max-height: 100vh;
+    overflow: scroll;
+}
+
+
+/* Sombra del menu */
+
+:host ::ng-deep .logoBar {
+    vertical-align: middle;
+    width: 38px;
+    margin-top: 18px;
+}
+
+:host ::ng-deep .shadow {
+    background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.01) 0%, rgba(0, 0, 0, 0) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.01) 0%, rgba(0, 0, 0, 0) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.01) 0%, rgba(0, 0, 0, 0) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#0d000000', endColorstr='#00000000', GradientType=1);
+    /* IE6-9 */
+    width: 30px;
+    height: 100vh;
+    position: absolute;
+    left: 0px;
+    z-index: 100;
+}
+
+
+/* BOTONES ::::::: */
+
+:host ::ng-deep.buttonRow button,
+.buttonRow a {
+    margin-right: 7px;
+}
+
+button {
+    display: inline;
+}
+
+:host ::ng-deep .primaryButton {
+    box-shadow: none;
+    background-color: #05abcf2b;
+    color: #00aace;
+    border-radius: 20px; 
+}
+
+:host ::ng-deep .primaryButton.back {
+    background-color: #efdaad;
+    color: #c19026;
+}
+
+:host ::ng-deep .primaryButton.cancel {
+    background-color: #33333352;
+    color: #33333352;
+}
+
+:host ::ng-deep .primaryButton.delete {
+    background-color: #fba59f;
+    color: #a9291f;
+}
+
+:host ::ng-deep .primaryButton.edit {
+    background-color: #ff6b0033;
+    color: #a23b12;
+}
+
+:host ::ng-deep .button {
+    margin-right: 5px;
+}
+
+
+/* Ajustes iconos en botones */
+
+:host ::ng-deep .iconButton {
+    margin-top: -4px;
+    margin-left: -4px;
+}
+
+
+/* PESTAÑAS o tabs ::::::: */
+
+:host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #00aace;
+}
+
+:host ::ng-deep .mat-tab-group {
+    background-color: #f5f7f8;
+}
+
+:host ::ng-deep .mat-tab-header,
+.mat-tab-nav-bar {
+    border-bottom: none;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+    background: #f5f7f8;
+    border-bottom: 0px solid #c9c9c9;
+    border-radius: 20px 20px 0px 0px;
+    color: #000;
+}
+
+:host ::ng-deep .mat-tab-label-active>.mat-tab-label-content {
+    color: #000!important;
+}
+
+:host ::ng-deep .mat-tab-label .mat-tab-label-content {
+    color: #777;
+}
+
+:host ::ng-deep .mat-tab-labels {
+    background-color: #ffffff;
+}
+
+:host ::ng-deep .mat-tab-label {
+    height: 42px;
+    min-width: 119px;
+}
+
+:host ::ng-deep .mat-tab-body-wrapper {
+   /* margin-top: 60px;*/
+}
+
+:host ::ng-deep .mat-tab-body {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+
+/* FORMULARIOS ::::::: */
+
+
+/* Formulario de búsqueda searchForm */
+
+:host ::ng-deep .searchForm {}
+
+:host ::ng-deep .searchFormInput {
+    background: #ebebeb;
+    padding: 7px;
+    vertical-align: middle;
+    border-radius: 20px;
+    padding-left: 13px;
+}
+
+:host ::ng-deep .searchForm .mat-form-field-underline {
+    display: none;
+}
+
+:host ::ng-deep .searchForm .mat-form-field-label-wrapper {
+    top: -6px!important;
+    left: 13px;
+}
+
+:host ::ng-deep .searchForm .mat-form-field-label {
+    color: #999;
+}
+
+:host ::ng-deep .searchForm .mat-form-field-label {
+    color: #999;
+}
+
+:host ::ng-deep .searchForm i {
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+    top: 10px;
+    color: #999;
+}
+
+
+/* Radio button */
+
+:host ::ng-deep .right {
+    text-align: right;
+}
+
+:host ::ng-deep .mat-radio-button {
+    display: inline-block;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0;
+    margin: 10px;
+}
+
+
+/* slide togle */
+
+:host ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: #3c763d8a;
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #3c763d;
+}
+
+
+/* togle de estado */
+
+:host ::ng-deep .userStatusContainer {
+    position: absolute;
+    background: #f5f7f8;
+    border-radius: 6px 6px 0px 0px;
+    padding: 10px;
+    text-align: center;
+    color: #999;
+    top: 88px;
+    right: 0px;
+}
+
+
+/* tag de instalación */
+
+:host ::ng-deep .instalation {
+    background-color: #3b838a66;
+    color: #3b838a;
+    border-radius: 20px;
+    float: left;
+    padding: 5px 16px;
+    margin-left: 10px;
+}
+
+
+/* LISTAS */
+
+:host ::ng-deep.listLink {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+
+/* Seleccionar plantilla */
+
+:host ::ng-deep .pageSectionContentContainer.transparent {
+    margin-bottom: 50px;
+    background-color: #f5f7f8;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 21px;
+    padding-bottom: 20px;
+    margin-top: 40px;
+}
+
+:host ::ng-deep .templateBlock {
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 4px;
+    min-height: 322px;
+}
+
+:host ::ng-deep .templateBlock h3 {
+    border-bottom: 2px solid #f5f7f8;
+    padding-bottom: 9px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 5px 5px 0px 0px;
+    color: #777;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+:host ::ng-deep .templateBlockContainer>.col-lg-3 {
+    padding: 1px 4px 1px 4px;
+}
+
+:host ::ng-deep .templateBlock>label>div.mat-radio-label-content {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    display: inline-block;
+    order: 0;
+    line-height: inherit;
+    padding-left: 8px;
+    padding-right: 0;
+    color: #333333bf;
+}
+
+:host ::ng-deep .pageSectionContentTitle {
+    margin-top: 50px;
+    background-color: transparent;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+:host ::ng-deep .nextContainer {
+    background: #fff;
+    padding: 20px;
+}
+
+/* Cabecera de usuario */
+:host ::ng-deep .row .aux {
+margin-bottom: 30px;
+box-shadow: 0px 2px 18px 0px rgba(212, 212, 212, 0.75);
+border-radius: 10px;
+}
+
+:host ::ng-deep .userHeader{
+    border-radius: 0px 10px 10px 0px;
+       color: #fff;
+    font-size: 2em;
+    text-align: right;
+    padding: 20px;
+    text-shadow: 6px 1px 17px rgba(10, 10, 10, 0.75);
+}
+
+:host ::ng-deep .userLogo{
+       border-radius: 10px 0px 0px 10px;
+       background-color: #fff;
+    font-size: 2em;
+    text-align: center;
+    padding: 20px;
+}

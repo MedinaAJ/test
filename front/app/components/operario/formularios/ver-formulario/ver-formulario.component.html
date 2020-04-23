@@ -1,0 +1,196 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-10 noPadding">
+            <span class="breadCrumb">{{this.usuario_activo.firstname}} / Partes /</span>
+            <h1>Ver parte</h1>
+            <div class="buttonRow">
+                <a [routerLink]="['/operario/formularios']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+
+                <!-- solo para jefes -->
+                <a *ngIf="this.parte && this.parte.usuario_confirmacion && (this.usuario_activo.super == 0 || this.usuario_activo.super == 1)" [routerLink]="['/operario/formularios/editar-parte/'+this.parte.id]"><button mat-raised-button class="primaryButton edit"><mat-icon class="iconButton">edit</mat-icon> Editar</button></a>
+                <!-- /solo para jefes -->
+                <!-- solo para operarios -->
+                <a *ngIf="this.parte && !this.parte.usuario_confirmacion" [routerLink]="['/operario/formularios/editar-parte/'+this.parte.id]"><button mat-raised-button class="primaryButton edit"><mat-icon class="iconButton">edit</mat-icon> Iniciar edición</button></a>
+                <!-- /solo para operarios -->
+
+
+                <!-- si no está confirmado -->
+                <a *ngIf="this.parte && !this.parte.usuario_confirmacion && (this.usuario_activo.super == 0 || this.usuario_activo.super == 2)" (click)="confirmarParte()"><button mat-raised-button class="primaryButton"><mat-icon class="iconButton">check</mat-icon> Confirmar parte</button></a>
+                <!-- /si no está confirmado -->
+
+                <!-- solo para jefes 
+                <a (click)="eliminarParte()"><button mat-raised-button class="primaryButton delete"><mat-icon class="iconButton">delete</mat-icon> Eliminar</button></a>
+                 /solo para jefes -->
+
+
+            </div>
+        </div>
+        <div class="col-lg-2 noPadding">
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="row infoSectionContainer">
+    <div class="infoSection col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 ">
+        <div class="col-lg-10 noPadding">
+
+            <span *ngIf="this.parte">ID: #{{this.parte.id}}</span><br>
+            <span *ngIf="this.parte">Nombre de la obra: {{this.parte.nombre_obra}}</span><br>
+            <span *ngIf="this.parte">Nombre del grupo: {{this.parte.nombre_grupo}}</span><br>
+            <span *ngIf="this.parte">Nombre de la plantilla:  {{this.parte.nombre_plantilla}}</span><br>
+            <span *ngIf="this.parte">
+                <span *ngIf="this.parte.usuario_inicio">{{this.parte.usuario_inicio}} Iniciado el dia {{this.parte.fecha_inicio}}</span>
+            <span *ngIf="!this.parte.usuario_inicio">Parte sin iniciar</span>
+            </span><br>
+            <span *ngIf="this.parte">
+                <span *ngIf="this.parte.usuario_confirmacion">{{this.parte.usuario_confirmacion}} Confirmado el dia {{this.parte.fecha_confirmacion}}</span>
+            <span *ngIf="!this.parte.usuario_confirmacion">Parte sin confirmar</span>
+            </span><br>
+            <!-- Ver con Alejandro
+           <span>Asignado a:</span><br>
+            <span>operario 1</span>
+            <span>operario 2</span>
+            <span>operario 2</span><br> -->
+            <span *ngIf="this.parte">
+                <span *ngIf="this.parte.ultimo_usuario">Guardado por última vez por: {{this.parte.ultimo_usuario}} el dia {{this.parte.ultimo_guardado}}</span>
+            <span *ngIf="!this.parte.ultimo_usuario">Parte sin iniciar</span>
+            </span><br>
+
+        </div>
+    </div>
+</div>
+
+<div class="row pageSectionContent">
+
+    <div *ngIf="this.parte && !this.parte.parte_relleno">
+        <h3>Aun no se ha iniciado el parte</h3>
+    </div>
+
+    <!-- header -->
+    <div *ngIf="header && header != 'null'">
+        <img src="{{url + 'get-header-template/' + header}}" style="height:50px;" />
+    </div>
+    <!-- /header -->
+
+    <!-- Div necesario para crear bloques iterativamente -->
+    <div *ngFor='let block of blocks'>
+        <!-- bloque de formulario -->
+        <div class="row formBlock">
+
+            <!-- nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+                <h3>{{block.name}}</h3>
+            </div>
+            <!-- /nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+                <!-- Div necesario para crear elementos en los bloques iterativamente -->
+                <div *ngFor='let element of block.elements'>
+
+                    <!-- caso añadir campo vacio de texto -->
+                    <div *ngIf="isText(element)" class="row formRow editing">
+                        <div class="col-lg-11" style="word-wrap: break-word;">
+                            <mat-label>{{element.value}} : </mat-label>
+                            <mat-label>{{element.user_value}}</mat-label>
+                        </div>
+                    </div>
+                    <!-- /caso añadir campo vacio de texto -->
+
+                    <!-- caso radio button -->
+                    <div *ngIf="isRadio(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-radio-group [(ngModel)]="element.user_value">
+                                <div *ngFor='let option of element.options'>
+                                    <mat-radio-button *ngIf="option === element.user_value" [value]="option">{{option}}</mat-radio-button><br>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <!-- /caso radio button -->
+
+                    <!-- caso añadir boton de subir -->
+                    <div *ngIf="isFile(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <!-- <button class="primaryButton back">
+                                <input type="file"
+                                (change)="changeFile($event, element)"
+                                disabled/>
+
+                                <mat-icon class="iconButton">add</mat-icon>{{ element.value }}
+                            </button>-->
+                            <mat-label>Archivo: </mat-label>
+                            <mat-label>{{element.user_value}}</mat-label>
+                            <br>
+                            <a href="{{url + 'get-file/' + element.user_value}}">
+                                <mat-label>Descargar</mat-label>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso añadir boton de subir -->
+
+                    <!-- caso crear lista -->
+                    <div *ngIf="isList(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-label>Opciones seleccionadas: <br></mat-label>
+                            <mat-label *ngFor="let opt of element.user_value">{{opt}}<br></mat-label>
+                        </div>
+                    </div>
+                    <!-- /caso crear lista -->
+
+                    <!-- caso campo numérico -->
+                    <div *ngIf="isNumber(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-label>{{element.value}} : </mat-label>
+                            <mat-label>{{element.user_value}}</mat-label>
+                        </div>
+
+                    </div>
+                    <!-- /caso campo numérico -->
+
+                    <!-- caso campo firma -->
+                    <div *ngIf="isFirma(element)" class="row formRow editing">
+                        <!-- <div class="col-lg-11">
+
+                            <canvas style="background-color: white; border: black 1px solid;" #canvas (click)="changeFirma($event, element)"></canvas>
+                        </div> -->
+
+                        <!-- No soy capaz de recuperar de manera adecuada la url, hay que revisar esto -->
+
+                        <img *ngIf="element.user_value" [src]="getSantizeUrl(element.user_value)">
+
+                    </div>
+                    <!-- /caso campo firma -->
+
+                    <!-- caso campo Imagen -->
+                    <div *ngIf="isImagen(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <img src="{{url + 'get-file/' + element.user_value}}" style="height:50px;" />
+                        </div>
+                    </div>
+                    <!-- /caso campo imagen -->
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /bloque de formulario -->
+    </div>
+
+    <!-- footer -->
+    <div *ngIf="footer && footer != 'null'">
+        <img src="{{url + 'get-footer-template/' + footer}}" style="height:50px;" />
+    </div>
+    <!-- /footer -->
+</div>
+
+
+
+<div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 ">
+
+
+
+</div>

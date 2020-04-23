@@ -1,0 +1,26 @@
+<div class="row mainHeadSection">
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+		<div class="col-lg-10 noPadding">
+            <span class="breadCrumb">{{ this.identity.firstname }} / </span><br>
+            <h1 *ngIf="this.empresa">Usuarios de la empresa {{this.empresa.name}}</h1>
+        </div> 	
+        <!-- 
+        <div class="col-lg-2 noPadding">
+
+            <form class="example-form">
+                <mat-form-field class="searchForm">
+                    <input class="searchFormInput" matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar usuario"><i class="material-icons global-search-icon">&#xE8B6;</i>
+                </mat-form-field>
+            </form>
+        </div>-->
+	</div>	
+	
+</div>
+
+<div class="row pageSectionContent">
+    <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+        <!-- Soy consciente de que me falta indicar el numero de jefes/empleados a su cargo, y jefes asignados -->
+        <app-listado *ngIf="this.datos_empleados" ruta="/jefe/usuarios/editar-usuario/" [interfaz]="this.columnas_empleados" [titulo]="this.nombre_columnas_empleados" [datos]="this.datos_empleados.data"></app-listado>
+    </div>
+</div>
+

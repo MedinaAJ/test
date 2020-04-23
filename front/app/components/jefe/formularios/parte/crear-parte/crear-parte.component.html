@@ -1,0 +1,112 @@
+
+<div class="row mainHeadSection">
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+		<div class="col-lg-12 noPadding">
+			<!-- aparece el nombre de usuario -->
+            <span class="breadCrumb">{{ this.identity.firstname }} / Partes /</span>
+            <h1>Crear parte</h1>
+
+			<div class="buttonRow">
+				<a [routerLink]="['/jefe/formularios']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+				
+				<a [routerLink]="['/jefe/formularios']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>	
+
+			</div>
+		</div> 		
+	</div>		
+</div>
+
+<form #createNewPart="ngForm" (ngSubmit)="createPart()" autocomplete="off">
+
+	<div class="row pageSectionContent">
+		<div class="pageSectionContentContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+			
+			<h2>Datos del parte</h2>
+		
+		</div>	
+
+		<div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+		    <mat-form-field>
+		        <input matInput type="text" [(ngModel)]="this.parte.nombre_obra" [ngModelOptions]="{standalone: true}" placeholder="Nombre de la obra" required>
+		        <mat-error >El nombre es necesario para crear un parte</mat-error>
+			</mat-form-field>
+			
+			<mat-form-field>
+		        <input matInput type="datetime-local" [(ngModel)]="this.parte.fecha_vencimiento" [ngModelOptions]="{standalone: true}" placeholder="Fecha de vencimiento" required>
+		        <mat-error >La fecha de vencimiento es necesaria para crear un parte</mat-error>
+			</mat-form-field>
+					   
+		</div>
+
+		<div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+		    <h2>Operarios con acceso al parte</h2>
+
+		</div>
+
+
+		<div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+		   <mat-form-field>
+			<mat-select placeholder="Selecciona a los operarios con acceso"
+						name="Select"
+						[(ngModel)]="selected"
+						multiple
+						#selectionModel="ngModel">
+			  <app-select-check-all [model]="selectionModel" 
+									[values]="options">
+			  </app-select-check-all>
+			  <mat-option *ngFor="let option of options"
+						  [value]="option">
+				{{option}}
+			  </mat-option>
+			</mat-select>
+		  </mat-form-field>
+
+		</div>
+	
+
+		<div class="pageSectionContentTitle col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+			
+			<h2>Selecciona una plantilla</h2>
+		
+		</div>	
+
+		
+
+		<div class="pageSectionContentContainer.transparent col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+			<mat-radio-group *ngIf="this.grupos_disponibles" [(ngModel)]="plantilla_seleccionada" [ngModelOptions]="{standalone: true}" aria-label="Plantilla" required class="templateBlockContainer">
+			<!-- for que repite tantos bloques como grupos haya -->
+
+				<div class="col-lg-3" *ngFor="let grupo of this.grupos_disponibles">
+					<div *ngIf="grupo.plantillas" class="templateBlock">
+						<!-- Nombre grupo -->
+						<h3>{{ grupo.name }}</h3>
+						<!-- Cada radio es una plantilla dentro del grupo -->
+						<div *ngFor="let plantilla of this.grupo.plantillas">
+							<mat-radio-button [value]="plantilla.id">{{ plantilla.name }}</mat-radio-button><br>
+						</div>
+					</div>
+				</div>
+			
+			</mat-radio-group>
+		</div>
+
+		
+
+		
+
+		<div class="pageSectionContentContainer transparent col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+				
+			<div class="buttonRow right nextContainer">
+				<button mat-raised-button class="primaryButton" type="submit" [disabled]="!createNewPart.form.valid"><mat-icon class="iconButton">navigate_next</mat-icon>Guardar</button>			
+			</div>
+			<div *ngIf="!createNewPart.form.valid">
+				<p>
+					Rellena todos los campos
+				</p>
+			</div>
+		</div>
+	</div>
+</form>

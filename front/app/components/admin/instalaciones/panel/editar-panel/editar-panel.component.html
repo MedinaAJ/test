@@ -1,0 +1,302 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-12 noPadding">
+            <span class="breadCrumb">Administrador / Instalaciones /</span><span *ngIf="this.instalacion" class="breadCrumb">{{ this.instalacion.name }}</span>
+            <h1>Editar Panel</h1>
+
+            <div class="buttonRow">
+
+                <a *ngIf="this.instalacion" [routerLink]="['/admin/instalaciones/editar-instalacion/'+this.instalacion.id]"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+                <a [routerLink]="['/admin/instalaciones']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>
+                <button mat-raised-button class="primaryButton" (click)="guardarPanel()"><mat-icon class="iconButton">save</mat-icon>Guardar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pageSectionContent">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <mat-tab-group>
+            <!-- Pestaña de configuracion -->
+            <mat-tab>
+                <!-- Encabezado -->
+                <ng-template mat-tab-label>
+                    <mat-icon>settings</mat-icon>
+                </ng-template>
+                <!-- Contenido -->
+                <!-- Div necesario para crear bloques iterativamente -->
+                <div *ngFor='let conexion of this.gen_panel.config.conexiones' style="background-color: #eeeeee; padding-bottom: 2px;">
+                    <div class="col-lg-1" style="margin-top: 15px; float: right;">
+                        <a (click)="removeConexion(conexion)">
+                            <mat-icon>close</mat-icon>
+                        </a>
+                    </div>
+                    <!-- bloque de formulario -->
+                    <div class="row formBlock">
+                        <mat-form-field style="max-width: 150px;">
+                            <input matInput type="text" [(ngModel)]="conexion.name" placeholder="Nombre de la conexión" >
+                        </mat-form-field>
+                        <mat-tab-group>
+                            <mat-tab label="Credenciales">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <mat-form-field>
+                                        <input matInput type="text" [(ngModel)]="conexion.credenciales.host" placeholder="Host" >
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput type="text" [(ngModel)]="conexion.credenciales.namedb" placeholder="Nombre de la BD" >
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput type="text" [(ngModel)]="conexion.credenciales.user" placeholder="Usuario" >
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput type="password" [(ngModel)]="conexion.credenciales.pass" placeholder="Contraseña" >
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <button mat-raised-button class="primaryButton" (click)="testConexion(conexion)"><mat-icon class="iconButton">save</mat-icon>Probar Conexion</button>
+                                    <br>
+                                    <mat-label>{{conexion.test}}</mat-label>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span>Añadir Campos</span>
+                                </ng-template>
+                                <div *ngIf="conexion.tablas_conexion.length > 0">
+                                    <mat-tab-group>
+                                        <!-- Pestañas dinamicas -->
+                                        <mat-tab *ngFor="let tabla of conexion.campos.tablas; let i = index">
+                                            <ng-template mat-tab-label>
+                                                <span>{{ tabla.name }}</span>
+                                                <div class="col-lg-1">
+                                                    <a (click)="removeTabla(tabla, conexion)">
+                                                        <mat-icon>close</mat-icon>
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Contenido -->
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <mat-form-field>
+                                                        <mat-label>Selecciona una tabla</mat-label>
+                                                        <mat-select matNativeControl [(ngModel)]="tabla.name">
+                                                            <mat-option *ngFor="let i_tabla of conexion.tablas_conexion" [value]="i_tabla">
+                                                                {{i_tabla}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field>
+                                                        <input matInput type="text" [(ngModel)]="tabla.real_name" placeholder="Nombre a mostrar" >
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <mat-form-field>
+                                                        <input matInput type="text" [(ngModel)]="tabla.campo_fecha" placeholder="Nombre del campo fecha de esta tabla" >
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngFor="let columna of tabla.columnas">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <mat-form-field>
+                                                        <input matInput type="text" [(ngModel)]="columna.campo_original" placeholder="Nombre real del campo en la tabla" >
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <mat-form-field>
+                                                        <input matInput type="text" [(ngModel)]="columna.campo_mostrar" placeholder="Nombre a mostrar del campo" >
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <mat-form-field>
+                                                        <mat-label>Tipo de operación</mat-label>
+                                                        <select matNativeControl [(ngModel)]="columna.operacion" required>
+                                                          <option value="no">Ninguna</option>
+                                                          <option value="acc">Acumulativo</option>
+                                                          <option value="act_ant">Actual - Anterior</option>
+                                                          <option value="m_d">Media por días</option>
+                                                          <option value="m_s">Media por semanas</option>
+                                                          <option value="m_m">Media por meses</option>
+                                                          <option value="s_d">Suma por días</option>
+                                                          <option value="s_s">Suma por semanas</option>
+                                                          <option value="s_m">Suma por meses</option>
+                                                        </select>
+                                                      </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <button (click)="addColumnaTabla(conexion, tabla)" style="border-radius: 50px; padding: 14px; margin-bottom: 4px;" mat-raised-button ><mat-icon class="iconButton">add</mat-icon></button>
+                                                    <button (click)="removeColumnaTabla(conexion, tabla, columna)" style="border-radius: 50px; padding: 14px; margin-bottom: 4px;" mat-raised-button ><mat-icon class="iconButton">remove</mat-icon></button>
+                                                </div>           
+                                            </div>
+                                        </mat-tab>
+                                        <!-- Pestaña/Botón que hace variar dinamicamente las pestañas-->
+                                        <mat-tab disabled>
+                                            <ng-template mat-tab-label>
+                                                <button mat-icon-button (click)="addTabla(conexion)">
+                                                    <mat-icon>add</mat-icon>
+                                                </button>
+                                            </ng-template>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                                <div *ngIf="conexion.tablas_conexion.length == 0">
+                                    <h3>Prueba la conexion antes de poder añadir campos</h3>
+                                    <button mat-raised-button class="primaryButton" (click)="testConexion(conexion)"><mat-icon class="iconButton">save</mat-icon>Probar Conexion</button>
+                                    <br>
+                                    <mat-label>{{conexion.test}}</mat-label>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+                <a (click)="addConexion()" 
+                    style="
+                        margin: auto;
+                        display: block;
+                        text-align: center;">
+                    <button style="border-radius: 50px; padding: 14px; margin-bottom: 4px;" mat-raised-button ><mat-icon class="iconButton">add</mat-icon>
+                    </button>
+                </a>
+            </mat-tab>
+
+            <!-- Pestañas dinamicas -->
+            <mat-tab *ngFor="let tab of this.gen_panel.tabs; let i = index">
+                <ng-template mat-tab-label>
+                    <span>{{ tab.name }}</span>
+                    <div class="col-lg-1">
+                        <a (click)="removeTab(tab)">
+                            <mat-icon>close</mat-icon>
+                        </a>
+                    </div>
+                </ng-template>
+                <!-- Contenido una pestaña con widgets -->
+                <div cdkDropListGroup>
+                    <!-- Widgets -->
+                    <div>
+                        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"
+                            style="border: solid 1px #000; border-radius: 4px; padding: 5px;"
+                            cdkDropList
+                            [cdkDropListData]="widgets_disponibles"
+                            (cdkDropListDropped)="drop($event)"
+                            >
+                            
+                            <div class="row" style="position: relative;" *ngFor="let widget of widgets_disponibles">
+                                <div class="col-lg-12" style="z-index: 1; position: block;" cdkDrag>
+                                    <img [src]="widget.img">
+                                </div>
+                                <div class="col-lg-12" style="z-index: 0; position: absolute; left: 0px; top: 0px;">
+                                    <img [src]="widget.img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contenido pestaña -->
+                    <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+                        <div [ngClass]="tab.grid_config.col1" style="border: 2px solid #000; border-radius: 20px; min-height: 400px;"
+                            cdkDropList
+                            [cdkDropListData]="tab.content_grid.columna1.widgets"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="col-lg-1" style="float: right; z-index: 1;">
+                                <a (click)="menosCol(1, -1, tab)">
+                                    <mat-icon>close</mat-icon>
+                                </a>
+                                <a (click)="masCol(1, -1, tab)">
+                                    <mat-icon>add</mat-icon>
+                                </a>
+                            </div>
+                            <div style="margin: 10px;">
+                                <div style="padding: 10px; margin-bottom: 10px; border-radius: 20px; position: relative; background-color: rgb(238, 238, 238);" 
+                                    *ngFor="let widget of tab.content_grid.columna1.widgets" cdkDrag>
+                                    <button style="position: absolute;" mat-icon-button (click)="configurarWidget(widget)">
+                                        <mat-icon>settings</mat-icon>
+                                    </button>
+                                    <div class="col-lg-1" style="float: right;">
+                                        <a (click)="removeWidget(widget, tab.content_grid.columna1.widgets)">
+                                            <mat-icon>close</mat-icon>
+                                        </a>
+                                    </div>
+                                    <img [src]="widget.defaultview">
+                                    <h3>{{widget.name}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div [ngClass]="tab.grid_config.col2" style="border: 2px solid #000; border-radius: 20px; min-height: 400px;"
+                            cdkDropList
+                            [cdkDropListData]="tab.content_grid.columna2.widgets"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="col-lg-1" style="float: right; z-index: 1;">
+                                <a (click)="menosCol(2, 0, tab)">
+                                    <mat-icon>close</mat-icon>
+                                </a>
+                                <a (click)="masCol(2, 0, tab)">
+                                    <mat-icon>add</mat-icon>
+                                </a>
+                            </div>
+                            <div class="col-lg-1" style="float: left; z-index: 1;">
+                                <a (click)="menosCol(2, 1, tab)">
+                                    <mat-icon>close</mat-icon>
+                                </a>
+                                <a (click)="masCol(2, 1, tab)">
+                                    <mat-icon>add</mat-icon>
+                                </a>
+                            </div>
+                            <div style="margin: 10px;">
+                                <div style="padding: 10px; margin-bottom: 10px; border-radius: 20px; position: relative; background-color: rgb(238, 238, 238);" 
+                                    *ngFor="let widget of tab.content_grid.columna2.widgets" cdkDrag>
+                                    <button style="position: absolute;" mat-icon-button (click)="configurarWidget(widget)">
+                                        <mat-icon>settings</mat-icon>
+                                    </button>
+                                    <div class="col-lg-1" style="float: right;">
+                                        <a (click)="removeWidget(widget, tab.content_grid.columna2.widgets)">
+                                            <mat-icon>close</mat-icon>
+                                        </a>
+                                    </div>
+                                    <img [src]="widget.defaultview">
+                                    <h3>{{widget.name}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div [ngClass]="tab.grid_config.col3" style="border: 2px solid #000; border-radius: 20px; min-height: 400px;"
+                            cdkDropList
+                            [cdkDropListData]="tab.content_grid.columna3.widgets"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="col-lg-1" style="float: left; z-index: 1;">
+                                <a (click)="menosCol(3, -1, tab)">
+                                    <mat-icon>close</mat-icon>
+                                </a>
+                                <a (click)="masCol(3, -1, tab)">
+                                    <mat-icon>add</mat-icon>
+                                </a>
+                            </div>
+                            <div style="margin: 10px;">
+                                <div style="padding: 10px; margin-bottom: 10px; border-radius: 20px; position: relative; background-color: rgb(238, 238, 238);" 
+                                    *ngFor="let widget of tab.content_grid.columna3.widgets" cdkDrag>
+                                    <button style="position: absolute;" mat-icon-button (click)="configurarWidget(widget)">
+                                        <mat-icon>settings</mat-icon>
+                                    </button>
+                                    <div class="col-lg-1" style="float: right;">
+                                        <a (click)="removeWidget(widget, tab.content_grid.columna3.widgets)">
+                                            <mat-icon>close</mat-icon>
+                                        </a>
+                                    </div>
+                                    <img [src]="widget.defaultview">
+                                    <h3>{{widget.name}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Pestaña/Botón que hace variar dinamicamente las pestañas-->
+            <mat-tab disabled>
+                <ng-template mat-tab-label>
+                    <button mat-icon-button (click)="addTab()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </ng-template>
+            </mat-tab>
+        
+        </mat-tab-group>
+    </div>
+</div>

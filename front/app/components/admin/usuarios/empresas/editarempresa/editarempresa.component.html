@@ -1,0 +1,116 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-12 noPadding">
+            <span class="breadCrumb">Administrador / Usuarios /</span>
+            <h1>Editar empresa</h1>
+
+            <div class="buttonRow">
+                <a [routerLink]="['/admin/usuarios']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+
+                <a [routerLink]="['/admin/usuarios']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<form #createNewUser="ngForm" (ngSubmit)="editarEmpresa()" autocomplete="off">
+
+    <div class="row pageSectionContent">
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Datos de la empresa</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <mat-form-field>
+                <input matInput type="text" #nombre="ngModel" name="name" [(ngModel)]="empresa.name" placeholder="Nombre" required>
+                <mat-error *ngIf="nombre.invalid">El nombre es necesario para crear la nueva empresa</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #resp="ngModel" name="responsable" [(ngModel)]="empresa.responsable" placeholder="Persona responsable">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #telefono="ngModel" name="phone" [(ngModel)]="empresa.phone" placeholder="Teléfono del responsable">
+            </mat-form-field>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Tema de la empresa</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+          
+            <div *ngIf="empresa.logo_small && empresa.logo_small != 'null'">
+                <img src="{{ this.url + 'get-image-empresa/' + empresa.logo_small}}" style="height:50px;"/>
+                <div class="col-lg-1">
+                    <a (click)="removeSmallLogo()">
+                        <mat-icon>close</mat-icon>
+                    </a>
+                </div>
+            </div> 
+            <p>
+                <label>Sube el logotipo pequeño de tu aplicacion:</label>
+                <input type="file" #logo placeholder="Subir logo..." (change)="logoSmallChangeEvent($event)" />
+            </p>
+
+            <br>
+
+            
+            <div *ngIf="empresa.logo_banner && empresa.logo_banner != 'null'">
+                <img src="{{ this.url + 'get-image-empresa/' + empresa.logo_banner}}" style="height:50px;"/>
+                <div class="col-lg-1">
+                    <a (click)="removeBannerLogo()">
+                        <mat-icon>close</mat-icon>
+                    </a>
+                </div>
+            </div>
+            <p>
+                <label>Sube el logotipo del menú horizontal:</label>
+                <input type="file" #banner placeholder="Subir logo horizontal..." (change)="logoBannerChangeEvent($event)" />
+            </p>
+
+            <!-- Color picker -->
+            <label>Selecciona el color de fondo: </label>
+            <br>
+            <input [(colorPicker)]="colorBarra" (colorPickerChange)="colorBarraChangeEvent($event)" [style.background]="empresa.color_back"/>
+            <br>
+
+            <!-- Color opcion activa -->
+            <label>Selecciona el color de la opcion activa de la barra de navegacion: </label>
+            <br>
+            <input [(colorPicker)]="colorActiva" (colorPickerChange)="colorActivaChangeEvent($event)" [style.background]="empresa.color_active"/>
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Miembros de la empresa</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <app-listado *ngIf="this.datos_usuarios" ruta="/admin/usuarios/editar-usuario/" [interfaz]="['firstname', 'email']" [titulo]="['Nombre', 'Correo']" [datos]="this.datos_usuarios.data"></app-listado>
+
+        </div>
+
+        <div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <div class="buttonRow right ">
+                <button mat-raised-button class="primaryButton" type="submit" [disabled]="!createNewUser.form.valid"><mat-icon class="iconButton">save</mat-icon>Guardar cambios</button>
+            </div>
+            <div *ngIf="!createNewUser.form.valid">
+                <p>
+                    Rellena todos los campos
+                </p>
+            </div>
+        </div>
+    </div>
+</form>

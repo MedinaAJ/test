@@ -1,0 +1,279 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-10 noPadding">
+            <span class="breadCrumb">{{ this.identity.firstname }} / Formularios /</span>
+            <h1>Crear plantilla</h1>
+            <div class="buttonRow">
+                <a [routerLink]="['/jefe/formularios']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+
+                <a [routerLink]="['/jefe/formularios']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>
+
+            </div>
+        </div>
+        <div class="col-lg-2 noPadding">
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="row infoSectionContainer">
+    <div class="infoSection col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 ">
+        <div class="col-lg-10 noPadding">
+
+            <span>ID: #01</span>
+
+            <br>
+
+            <p *ngIf="grupos_disponibles.length == 0" style="color: red;">Antes de crear una plantilla debes crear un grupo</p>
+            <a *ngIf="grupos_disponibles.length == 0" [routerLink]="['/jefe/formularios/crear-grupo']">
+                <button mat-raised-button class="primaryButton">
+                    <mat-icon class="iconButton">library_add</mat-icon> Crear un grupo
+                </button>
+            </a>
+
+            <mat-form-field *ngIf="grupos_disponibles.length > 0">
+                <mat-label>Grupos Disponibles</mat-label>
+                <mat-select name="grupos" [(ngModel)]="this.selected_grupos" (selectionChange)="changeGroup($event.value)">
+                  <mat-option *ngFor="let option of grupos_disponibles" [value]="option.id">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <p *ngIf="grupos_disponibles.length > 0">¿No encuentras el grupo que buscas?  <a [routerLink]="['/jefe/formularios/crear-grupo']"><mat-icon>open_in_new</mat-icon></a></p>
+
+            <mat-form-field>
+                <input matInput type="text" [(ngModel)]="this.nombre_plantilla" placeholder="Nombre de la plantilla" required>
+                <mat-error>El nombre de la plantilla es necesario</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+<div class="row pageSectionContent">
+
+    <!-- header -->
+    <div *ngIf="(header && header != 'null') || this.view_params">
+        <img [src]="headerSrc" style="height:50px;"/>
+        <div class="col-lg-1">
+            <a (click)="removeHeader()">
+                <mat-icon>close</mat-icon>
+            </a>
+        </div>
+    </div>
+    
+    <p>
+        <label>Sube la cabecera de la plantilla:</label>
+        <input type="file" placeholder="Subir imagen..." (change)="headerChangeEvent($event)" />
+    </p>
+    <!-- /header -->
+
+    <!-- Div necesario para crear bloques iterativamente -->
+    <div *ngFor='let block of blocks'>
+        <!-- bloque de formulario -->
+        <div class="row formBlock">
+
+            <!-- nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+                <mat-form-field>
+                    <input matInput type="text" [(ngModel)]="block.name" placeholder="Nombre del bloque" required>
+                    <mat-error>El nombre del bloque es necesario</mat-error>
+                </mat-form-field>
+            </div>
+            <!-- /nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+                <a (click)="removeBlock(block)"><button mat-raised-button class="primaryButton delete deleteBlock"><mat-icon class="iconButton">delete</mat-icon></button></a>
+
+                <!-- Div necesario para crear elementos en los bloques iterativamente -->
+                <div *ngFor='let element of block.elements'>
+
+                    <!-- caso añadir campo vacio de texto -->
+                    <div *ngIf="this.opService.isText(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="text" [(ngModel)]="element.value" placeholder="Nombre del campo, por ejemplo: 'Introduce potencia consumida'">
+
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso añadir campo vacio de texto -->
+
+                    <!-- caso radio button -->
+                    <div *ngIf="this.opService.isRadio(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-radio-group *ngFor='let option of element.options'>
+                                <mat-radio-button></mat-radio-button><span><strong>{{option}}&nbsp;&nbsp;&nbsp;</strong></span>
+                                <a (click)="removeRadioOption(block, element, option)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">remove</mat-icon>Eliminar opcion</button></a><br>
+                            </mat-radio-group>
+
+                            <!-- Si no pongo este div no me coge el valor de la variable :) -->
+                            <div>
+                                <mat-form-field>
+                                    <input matInput type="text" #newOptionRadio [(ngModel)]="this.textoRadio" placeholder="Introduce una opción, por ejemplo: 'Opcion 1'">
+
+                                </mat-form-field>
+                                <a (click)="addRadioOption(block, element, newOptionRadio.value)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir opcion</button></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso radio button -->
+
+                    <!-- caso añadir boton de subir -->
+                    <div *ngIf="this.opService.isFile(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="text" [(ngModel)]="element.value" placeholder="Introduce el texto del boton subir archivo">
+
+                            </mat-form-field>
+                            <a href=""><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Subir archivos</button></a>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso añadir boton de subir -->
+
+                    <!-- caso crear lista -->
+                    <div *ngIf="this.opService.isList(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-radio-group *ngFor='let option of element.options'>
+                                <mat-icon>arrow_right_alt</mat-icon><span><strong>{{option}}&nbsp;&nbsp;&nbsp;</strong></span>
+                                <a (click)="removeListOption(block, element, option)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">remove</mat-icon>Eliminar opcion</button></a><br>
+                            </mat-radio-group>
+
+                            <!-- Si no pongo este div no me coge el valor de la variable :) -->
+                            <div>
+                                <mat-form-field>
+                                    <input matInput type="text" #newOptionList [(ngModel)]="this.textoList" placeholder="Introduce una opción, por ejemplo: 'Opcion 1'">
+
+                                </mat-form-field>
+                                <a (click)="addListOption(block, element, newOptionList.value)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir opcion</button></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso crear lista -->
+
+                    <!-- caso campo numérico -->
+                    <div *ngIf="this.opService.isNumber(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="text" [(ngModel)]="element.value" placeholder="Nombre del campo numerico, por ejemplo: 'Introduce potencia consumida'">
+
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso campo numérico -->
+
+                    <!-- caso campo firma -->
+                    <div *ngIf="this.opService.isFirma(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+
+                            <canvas style="background-color: white; border: black 1px solid;" #canvas></canvas>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso campo firma -->
+
+                    <!-- caso campo Imagen -->
+                    <div *ngIf="this.opService.isImagen(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="text" [(ngModel)]="element.value" placeholder="Introduce el texto del boton subir imagen">
+
+                            </mat-form-field>
+                            <a href=""><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Subir imagen</button></a>
+                        </div>
+                        <div class="col-lg-1">
+                            <a (click)="removeElement(block, element)">
+                                <mat-icon>close</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /caso campo imagen -->
+
+                </div>
+
+
+                <!-- opciones -->
+                <a (click)="addTextField(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir campo vacío de texto</button></a>
+                <a (click)="addRadioButton(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir radio button</button></a>
+                <a (click)="addUpFile(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir botón de subir</button></a>
+                <a (click)="addList(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Crear lista</button></a>
+                <a (click)="addNumberField(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir campo numérico</button></a>
+                <a (click)="addFirmField(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir campo firma</button></a>
+                <a (click)="addImageField(block)"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon>Añadir campo imagen</button></a>
+                <!-- fin de opciones -->
+
+
+            </div>
+
+        </div>
+        <!-- /bloque de formulario -->
+    </div>
+
+    <!-- crear bloque -->
+
+    <div class="pageSectionContentContainer createBlock col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+        Crear bloque<br> <a (click)="addBlock()"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">add</mat-icon></button></a>
+    </div>
+
+    <!-- /crear bloque -->
+
+    <!-- footer -->
+    <div *ngIf="(footer && footer != 'null') || this.view_params">
+        <img [src]="footerSrc" style="height:50px;"/>
+        <div class="col-lg-1">
+            <a (click)="removeFooter()">
+                <mat-icon>close</mat-icon>
+            </a>
+        </div>
+    </div>
+    
+    <p>
+        <label>Sube el pie de pagina de la plantilla:</label>
+        <input type="file" placeholder="Subir imagen..." (change)="footerChangeEvent($event)" />
+    </p>
+    <!-- /footer -->
+
+    <div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+        <div class="buttonRow right ">
+            <button (click)="viewTemplate()" mat-raised-button class="primaryButton" type="submit"><mat-icon class="iconButton">save</mat-icon>Vista previa</button>
+
+            <button (click)="saveTemplate()" mat-raised-button class="primaryButton"><mat-icon class="iconButton">save</mat-icon>Guardar cambios</button>
+        </div>
+
+    </div>
+
+</div>

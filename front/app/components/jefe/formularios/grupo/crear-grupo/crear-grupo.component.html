@@ -1,0 +1,52 @@
+
+
+<div class="row mainHeadSection">
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+		<div class="col-lg-12 noPadding">
+			<span class="breadCrumb">{{ this.identity.firstname }} / Formularios /</span>
+			<h1>Crear grupo</h1>
+		
+			<div class="buttonRow">
+				<a [routerLink]="['/jefe/formularios']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+				
+				<a [routerLink]="['/jefe/formularios']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>	
+
+			</div>
+		</div> 		
+	</div>		
+</div>
+
+<form #createNewGroup="ngForm" (ngSubmit)="createGroup()" autocomplete="off">
+
+	<div class="row pageSectionContent">
+		<div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+			
+			<h2>Nombre del grupo</h2>
+		
+		</div>	
+
+		<div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+			
+			<mat-form-field>
+				<input matInput type="text" #nombre="ngModel" name="name" [(ngModel)]="this.name" placeholder="Nombre" required>
+				<mat-error *ngIf="nombre.invalid">El grupo debe tener un nombre</mat-error>
+			</mat-form-field>
+
+		</div>
+
+		
+
+		<div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+				
+			<div class="buttonRow right ">
+				<button mat-raised-button class="primaryButton" type="submit" [disabled]="!createNewGroup.form.valid"><mat-icon class="iconButton">save</mat-icon>Guardar y crear</button>			
+			</div>
+			<div *ngIf="!createNewGroup.form.valid">
+				<p>
+					Rellena todos los campos
+				</p>
+			</div>
+		</div>
+	</div>
+</form>
+

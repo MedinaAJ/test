@@ -1,0 +1,10 @@
+.mat-row{        
+    position: relative;
+}
+
+.mat-row-link{
+    position: absolute;
+    width: 87%;
+    height: 8%;      
+    margin-left: -10%;     
+}

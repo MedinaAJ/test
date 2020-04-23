@@ -1,0 +1,189 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-10 noPadding">
+            <span class="breadCrumb">{{this.usuario_activo.firstname}} / Formularios / Editar formulario</span>
+            <h1>Nombre formulario</h1>
+            <div class="buttonRow">
+                <a [routerLink]="['/operario/formularios/ver-parte/'+this.id]"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+
+                <a [routerLink]="['/operario/formularios']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>
+
+            </div>
+        </div>
+        <div class="col-lg-2 noPadding">
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="row infoSectionContainer">
+    <div class="infoSection col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 ">
+        <div class="col-lg-10 noPadding">
+
+            <span *ngIf="this.parte">ID: #{{this.parte.id}}</span><br>
+           <span *ngIf="this.parte">Nombre de la obra: {{this.parte.nombre_obra}}</span><br>
+            <span *ngIf="this.parte">Nombre del grupo: {{this.parte.nombre_grupo}}</span><br>
+            <span *ngIf="this.parte">Nombre de la plantilla:  {{this.parte.nombre_plantilla}}</span><br>
+            <span *ngIf="this.parte">
+                <span *ngIf="this.parte.usuario_inicio">{{this.parte.usuario_inicio}} Iniciado el dia {{this.parte.fecha_inicio}}</span>
+                <span *ngIf="!this.parte.usuario_inicio">Parte sin iniciar</span>
+            </span><br>
+            <span *ngIf="this.parte">
+                <span *ngIf="this.parte.usuario_confirmacion">{{this.parte.usuario_confirmacion}} Confirmado el dia {{this.parte.fecha_confirmacion}}</span>
+                <span *ngIf="!this.parte.usuario_confirmacion">Parte sin confirmar</span>
+            </span><br>
+           <!-- Ver con Alejandro
+           <span>Asignado a:</span><br>
+            <span>operario 1</span>
+            <span>operario 2</span>
+            <span>operario 2</span><br> -->
+            <span *ngIf="this.parte">
+                <span *ngIf="this.parte.ultimo_usuario">Guardado por última vez por: {{this.parte.ultimo_usuario}} el dia {{this.parte.ultimo_guardado}}</span>
+                <span *ngIf="!this.parte.ultimo_usuario">Parte sin iniciar</span>
+            </span><br>       
+        </div>
+    </div>
+</div>
+
+<div class="row pageSectionContent">
+
+   <!-- header -->
+   <div *ngIf="header && header != 'null'">
+        <img src="{{url + 'get-header-template/' + header}}" style="height:50px;"/>
+    </div>
+    <!-- /header -->
+
+    <!-- Div necesario para crear bloques iterativamente -->
+    <div *ngFor='let block of blocks'>
+        <!-- bloque de formulario -->
+        <div class="row formBlock">
+
+            <!-- nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+                <h3>{{block.name}}</h3>
+            </div>
+            <!-- /nombre del bloque de la plantilla -->
+            <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+                <!-- Div necesario para crear elementos en los bloques iterativamente -->
+                <div *ngFor='let element of block.elements'>
+
+                    <!-- caso añadir campo vacio de texto -->
+                    <div *ngIf="isText(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <textarea matInput type="text" [(ngModel)]="element.user_value" placeholder="{{element.value}}"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- /caso añadir campo vacio de texto -->
+
+                    <!-- caso radio button -->
+                    <div *ngIf="isRadio(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-radio-group [(ngModel)]="element.user_value">
+                                <div *ngFor='let option of element.options'>
+                                    <mat-radio-button [value]="option">{{option}}</mat-radio-button><br>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <!-- /caso radio button -->
+
+                    <!-- caso añadir boton de subir -->
+                    <div *ngIf="isFile(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <button class="primaryButton back">
+                                <input type="file"
+                                (change)="changeFile($event, element)"
+                                />
+    
+                                <mat-icon class="iconButton">add</mat-icon>{{ element.value }}
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /caso añadir boton de subir -->
+
+                    <!-- caso crear lista -->
+                    <div *ngIf="isList(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <mat-select placeholder="Selecciona las opciones"
+                                            name="Select"
+                                            [(ngModel)]="element.user_value" 
+                                            multiple
+                                            #selectionModel="ngModel">
+                                  <app-select-check-all [model]="selectionModel" 
+                                                        [values]="element.options">
+                                  </app-select-check-all>
+                                  <mat-option *ngFor="let option of element.options"
+                                              [value]="option">
+                                    {{option}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- /caso crear lista -->
+
+                    <!-- caso campo numérico -->
+                    <div *ngIf="isNumber(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <mat-form-field>
+                                <input matInput type="number" [(ngModel)]="element.user_value" placeholder="{{element.value}}">
+                            </mat-form-field>
+                        </div>
+                      
+                    </div>
+                    <!-- /caso campo numérico -->
+
+                    <!-- caso campo firma -->
+                    <div *ngIf="isFirma(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+
+                            <canvas style="background-color: white; border: black 1px solid;" #canvas (click)="changeFirma($event, element)"></canvas>
+                        </div>
+                        <button (click)="prepararFirma()">Habilitar Firma</button>
+                        <button (click)="limpiarFirma()">Limpiar</button>
+                    </div>
+                    <!-- /caso campo firma -->
+
+                    <!-- caso campo Imagen -->
+                    <div *ngIf="isImagen(element)" class="row formRow editing">
+                        <div class="col-lg-11">
+                            <button class="primaryButton back">
+                                <input type="file"
+                                (change)="changeImagen($event, element)"
+                                />
+
+                                <mat-icon class="iconButton">image</mat-icon>{{ element.value }}
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /caso campo imagen -->
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /bloque de formulario -->
+    </div>
+
+    <!-- footer -->
+    <div *ngIf="footer && footer != 'null'">
+        <img src="{{url + 'get-footer-template/' + footer}}" style="height:50px;"/>
+    </div>
+    <!-- /footer -->
+
+</div>
+
+<div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+				
+    <div class="buttonRow right ">
+        <button mat-raised-button class="primaryButton" (click)="guardarCambios()"><mat-icon class="iconButton">save</mat-icon>Guardar cambios</button>			
+    </div>
+</div>

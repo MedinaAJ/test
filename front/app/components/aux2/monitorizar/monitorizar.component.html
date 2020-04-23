@@ -1,0 +1,59 @@
+<div class="row pageSectionContent">
+    <div *ngIf="this.posible" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <mat-tab-group>
+            <!-- Pestañas dinamicas -->
+            <mat-tab *ngFor="let tab of this.gen_panel.tabs; let i = index">
+                <ng-template mat-tab-label>
+                    <span>{{ tab.name }}</span>
+                </ng-template>
+                <!-- Contenido una pestaña con widgets -->
+                <div>
+                    <!-- Widgets -->
+                    <div>
+                        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"
+                            style="border: solid 1px #000; border-radius: 4px; padding: 5px;">
+                            
+                            <div class="row" style="position: relative;" *ngFor="let i of [1,2,3,4,5,6]">
+                                <p>Field {{i}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contenido pestaña -->
+                    <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+                        <div [ngClass]="tab.grid_config.col1" style="border: 2px solid #000; border-radius: 20px; min-height: 400px;">
+                            <div style="margin: 10px;">
+                                <div style="padding: 10px; margin-bottom: 10px; border-radius: 20px; position: relative; background-color: rgb(238, 238, 238);" 
+                                    *ngFor="let widget of tab.content_grid.columna1.widgets">
+                                    <app-widget [widget]="widget"></app-widget>
+                                </div>
+                            </div>
+                        </div>
+                        <div [ngClass]="tab.grid_config.col2" style="border: 2px solid #000; border-radius: 20px; min-height: 400px;">
+                            <div style="margin: 10px;">
+                                <div style="padding: 10px; margin-bottom: 10px; border-radius: 20px; position: relative; background-color: rgb(238, 238, 238);" 
+                                    *ngFor="let widget of tab.content_grid.columna2.widgets">
+                                    <app-widget [widget]="widget"></app-widget>
+                                </div>
+                            </div>
+                        </div>
+                        <div [ngClass]="tab.grid_config.col3" style="border: 2px solid #000; border-radius: 20px; min-height: 400px;">
+                            <div style="margin: 10px;">
+                                <div style="padding: 10px; margin-bottom: 10px; border-radius: 20px; position: relative; background-color: rgb(238, 238, 238);" 
+                                    *ngFor="let widget of tab.content_grid.columna3.widgets">
+                                    <app-widget [widget]="widget"></app-widget>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div *ngIf="!this.posible">
+        <h3>Panel no configurado</h3>
+    </div>
+</div>
+<h1>---------DEMO----------</h1>
+<!-- https://valor-software.com/ng2-charts 
+https://stackblitz.com/edit/ng2-chart-example?file=app%2Fapp.component.ts -->
+<app-chart></app-chart>

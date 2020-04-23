@@ -1,0 +1,129 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppRouting } from './routes/routing';
+import { HttpModule } from '@angular/http';
+import { AppComponent } from './app.component';
+
+import { LoginComponent } from './components/login/login.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+
+
+import { MatSliderModule } from '@angular/material/slider';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { InicioComponent } from './components/admin/inicio/inicio.component';
+import { UsuariosComponent } from './components/admin/usuarios/usuarios.component';
+import { InstalacionesComponent } from './components/admin/instalaciones/instalaciones.component';
+import { CrearusuarioComponent } from './components/admin/usuarios/usuarios/crearusuario/crearusuario.component';
+import { CrearempresaComponent } from './components/admin/usuarios/empresas/crearempresa/crearempresa.component';
+import { EditarempresaComponent } from './components/admin/usuarios/empresas/editarempresa/editarempresa.component';
+import { JefeComponent } from './components/jefe/jefe.component';
+import { OperarioComponent } from './components/operario/operario.component';
+import { ListadoComponent } from './components/aux2/listado/listado.component';
+import { SelectCheckAllComponent } from './components/aux2/checkbox-selector/select-check-all.components';
+import { EditarusuarioComponent } from './components/admin/usuarios/usuarios/editarusuario/editarusuario.component';
+import { FormulariosJefeComponent } from './components/jefe/formularios/formularios.component';
+import { InicioJefeComponent } from './components/jefe/inicio/inicio.component';
+import { UsuariosJefeComponent } from './components/jefe/usuarios/usuarios.component';
+import { InstalacionesJefeComponent } from './components/jefe/instalaciones/instalaciones.component';
+import { JefeEditarUsuarioComponent } from './components/jefe/usuarios/editar-usuario/editar-usuario.component';
+import { JefeVerParteComponent } from './components/jefe/formularios/parte/ver-parte/ver-parte.component';
+import { JefeCrearParteComponent } from './components/jefe/formularios/parte/crear-parte/crear-parte.component';
+import { JefeEditarParteComponent } from './components/jefe/formularios/parte/editar-parte/editar-parte.component';
+import { JefeEditarPlantillaComponent } from './components/jefe/formularios/plantilla/editar-plantilla/editar-plantilla.component';
+import { JefeCrearPlantillaComponent } from './components/jefe/formularios/plantilla/crear-plantilla/crear-plantilla.component';
+import { JefeVerPlantillaComponent } from './components/jefe/formularios/plantilla/ver-plantilla/ver-plantilla.component';
+import { JefeVerGrupoComponent } from './components/jefe/formularios/grupo/ver-grupo/ver-grupo.component';
+import { JefeCrearGrupoComponent } from './components/jefe/formularios/grupo/crear-grupo/crear-grupo.component';
+import { JefeEditarGrupoComponent } from './components/jefe/formularios/grupo/editar-grupo/editar-grupo.component';
+import { FormulariosOperarioComponent } from './components/operario/formularios/formularios.component';
+import { OperarioVerParteComponent } from './components/operario/formularios/ver-formulario/ver-formulario.component';
+import { OperarioEditarParteComponent } from './components/operario/formularios/editar-formulario/editar-formulario.component';
+import { InicioOperarioComponent } from './components/operario/inicio/inicio.component';
+import { InstalacionesOperarioComponent } from './components/operario/instalaciones/instalaciones.component';
+import { NovedadesComponent } from './components/aux2/novedades/novedades.component';
+import { PrevisualizarPlantillaComponent } from './components/jefe/formularios/plantilla/previsualizar-plantilla/previsualizar-plantilla.component';
+
+
+import { ComponentModule } from './modules/component-module';
+import { MaterialModule } from './modules/material-module';
+import { EditarInstalacionComponent } from './components/admin/instalaciones/editar-instalacion/editar-instalacion.component';
+import { EditarPanelComponent } from './components/admin/instalaciones/panel/editar-panel/editar-panel.component';
+import { PopupwidgetComponent } from './components/aux2/popupwidget/popupwidget.component';
+import { VerPanelComponent } from './components/admin/instalaciones/panel/ver-panel/ver-panel.component';
+ 
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    NotfoundComponent,
+    EditarInstalacionComponent,
+    EditarPanelComponent,
+    PopupwidgetComponent,
+    VerPanelComponent
+    InicioComponent,
+    UsuariosComponent,
+    InstalacionesComponent,
+    CrearusuarioComponent,
+    CrearempresaComponent,
+    EditarempresaComponent,
+    JefeComponent,
+    OperarioComponent,
+    ListadoComponent,
+    SelectCheckAllComponent,
+    EditarusuarioComponent,
+    FormulariosJefeComponent,
+    InicioJefeComponent,
+    UsuariosJefeComponent,
+    InstalacionesJefeComponent,
+    JefeEditarUsuarioComponent,
+    JefeVerParteComponent,
+    JefeCrearParteComponent,
+    JefeEditarParteComponent,
+    JefeEditarPlantillaComponent,
+    JefeCrearPlantillaComponent,
+    JefeVerPlantillaComponent,
+    JefeVerGrupoComponent,
+    JefeCrearGrupoComponent,
+    JefeEditarGrupoComponent,
+    FormulariosOperarioComponent,
+    OperarioVerParteComponent,
+    OperarioEditarParteComponent,
+    InicioOperarioComponent,
+    InstalacionesOperarioComponent,
+    NovedadesComponent,
+    PrevisualizarPlantillaComponent
+   
+  ],
+  exports: [ 
+    ListadoComponent,
+    SelectCheckAllComponent,
+    NovedadesComponent>>>>>>> 06426efb630795d353a40e41cd693f71f2fc1701
+  ],
+  exports: [PopupwidgetComponent],
+  entryComponents: [PopupwidgetComponent],
+  imports: [
+    BrowserModule,
+	  BrowserAnimationsModule,
+    AppRoutingModule,
+	  AppRouting,
+	  HttpModule,
+    FormsModule,
+    MaterialModule,
+    ComponentModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

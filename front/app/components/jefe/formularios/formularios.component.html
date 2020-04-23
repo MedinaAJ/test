@@ -1,0 +1,51 @@
+<div class="row mainHeadSection tabs">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-10 noPadding">
+            <span class="breadCrumb">{{ this.identity.firstname }} /</span>
+            <h1>Formularios</h1>
+            <div class="buttonRow">
+                <a [routerLink]="['/jefe/formularios/crear-parte']">
+                    <button mat-raised-button class="primaryButton">
+                        <mat-icon class="iconButton">add_box</mat-icon> Crear parte</button>
+                </a>
+                <a [routerLink]="['/jefe/formularios/crear-plantilla']">
+                    <button mat-raised-button class="primaryButton">
+                        <mat-icon class="iconButton">note_add</mat-icon> Crear plantilla</button>
+                </a>
+                <a [routerLink]="['/jefe/formularios/crear-grupo']">
+                    <button mat-raised-button class="primaryButton">
+                        <mat-icon class="iconButton">library_add</mat-icon> Crear grupo</button>
+                </a>
+            </div>
+        </div>
+        <!-- <div class="col-lg-2 noPadding">
+
+            <form class="example-form">
+                <mat-form-field class="searchForm">
+                    <input class="searchFormInput" matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar"><i class="material-icons global-search-icon">&#xE8B6;</i>
+                </mat-form-field>
+            </form>
+        </div> -->
+
+    </div>
+</div>
+<br>
+<div class="row pageSectionContent tabs">
+    <div class="pageSectionContentContainer tabs  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+        <router-outlet></router-outlet>
+        <mat-tab-group>
+            <mat-tab label="Partes">
+                <app-listado *ngIf="this.datos_partes" acciones_masivas="partes" ruta="/jefe/formularios/ver-parte/" [interfaz]="this.columnas_partes" [titulo]="this.nombre_columnas_partes" [datos]="this.datos_partes"></app-listado>
+            </mat-tab>
+
+            <mat-tab label="Plantillas">
+                <app-listado *ngIf="this.datos_plantillas" acciones_masivas="plantillas" ruta="/jefe/formularios/ver-plantilla/" [interfaz]="this.columnas_plantillas" [titulo]="this.nombre_columnas_plantillas" [datos]="this.datos_plantillas"></app-listado>
+            </mat-tab>
+
+            <mat-tab label="Grupos">
+                <app-listado *ngIf="this.datos_grupos" ruta="/jefe/formularios/ver-grupo/" [interfaz]="this.columnas_grupos" [titulo]="this.nombre_columnas_grupos" [datos]="this.datos_grupos"></app-listado>
+            </mat-tab>
+        </mat-tab-group>
+
+    </div>
+</div>

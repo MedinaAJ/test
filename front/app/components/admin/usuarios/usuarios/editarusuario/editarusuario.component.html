@@ -1,0 +1,171 @@
+<div class="row mainHeadSection">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 noPadding">
+        <div class="col-lg-12 noPadding">
+            <span class="breadCrumb">Administrador / Usuarios /</span>
+            <h1>Editar usuario</h1>
+
+            <div class="buttonRow">
+
+                <a [routerLink]="['/admin/usuarios']"><button mat-raised-button class="primaryButton back"><mat-icon class="iconButton">keyboard_backspace</mat-icon> Atrás</button></a>
+                <a [routerLink]="['/admin/usuarios']"><button mat-raised-button class="primaryButton cancel"><mat-icon class="iconButton">cancel</mat-icon> Cancelar</button></a>
+                <a (click)="eliminarUsuario()"><button mat-raised-button class="primaryButton delete"><mat-icon class="iconButton">delete</mat-icon> Eliminar Usuario</button></a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<form #createNewUser="ngForm" autocomplete="off">
+    <div class="row pageSectionContent">
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+            <mat-slide-toggle style="right: 30px; position: absolute;" [checked]="this.empleados.active == 1" (change)="checkActive($event)">Activo</mat-slide-toggle>
+            <h2>Empresa a la que pertenece el empleado</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+            <h1>{{ this.nombre_empresa }}</h1>
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Datos del usuario</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <mat-form-field>
+                <input matInput type="text" #nombre="ngModel" name="firstname" [(ngModel)]="empleados.firstname" placeholder="Nombre" required>
+                <mat-error *ngIf="nombre.invalid">El nombre es necesario para crear el nuevo usuario</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #apellidos="ngModel" name="lastname" [(ngModel)]="empleados.lastname" placeholder="Apellidos" required>
+                <mat-error *ngIf="apellidos.invalid">Los apellidos son necesarios para crear el nuevo usuario</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #telefono="ngModel" name="phone" [(ngModel)]="empleados.phone" placeholder="Telefono" required>
+                <mat-error *ngIf="telefono.invalid">El telefono es necesario para crear el nuevo usuario</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" #contrasenyia="ngModel" name="passwd" [(ngModel)]="empleados.passwd" placeholder="Contraseña" required>
+                <mat-error *ngIf="contrasenyia.invalid">La contraseña es necesaria para crear el nuevo usuario</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput #correo="ngModel" name="email" [(ngModel)]="empleados.email" placeholder="Email" required>
+                <mat-error *ngIf="correo.invalid">El correo es necesario para crear el nuevo usuario</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <textarea matInput #campo1="ngModel" name="field1" [(ngModel)]="empleados.field1" placeholder="Campo a rellenar 1"></textarea>
+            </mat-form-field>
+
+            <mat-form-field>
+                <textarea matInput #campo2="ngModel" name="field2" [(ngModel)]="empleados.field2" placeholder="Campo a rellenar 2"></textarea>
+            </mat-form-field>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Tipo de usuario</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <!--
+				1 - Administrador
+				2 - Jefe
+				3 - Operario
+			-->
+            <mat-radio-group #perfil="ngModel" name="id_profile" [(ngModel)]="empleados.id_profile" (change)="verificarRol()" aria-label="Tipo de usuario" disabled>
+                <mat-radio-button [value]="2">Jefe</mat-radio-button>
+                <mat-radio-button [value]="3">Operario</mat-radio-button>
+            </mat-radio-group>
+
+        </div>
+
+        <!-- si es jefe -->
+
+        <div *ngIf="empleados.id_profile === 2" class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Empleados a su cargo</h2>
+
+        </div>
+
+        <div *ngIf="empleados.id_profile === 2" class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <!-- poner otro select como el de arriba -->
+            <mat-form-field>
+                <mat-select placeholder="Seleccionar empleados" name="SelectEmpleados" [(ngModel)]="selected_empleados" multiple #selectionEmpleadosModel="ngModel">
+                    <app-select-check-all [model]="selectionEmpleadosModel" [values]="options_empleados">
+                    </app-select-check-all>
+                    <mat-option *ngFor="let option of options_empleados" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <!-- end si es jefe -->
+
+        <!-- si es operario -->
+
+        <div *ngIf="empleados.id_profile === 3" class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Jefes a su cargo</h2>
+
+        </div>
+
+        <div *ngIf="empleados.id_profile === 3" class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <!-- poner otro select como el de arriba -->
+            <mat-form-field>
+                <mat-select placeholder="Seleccionar jefes" name="SelectJefes" [(ngModel)]="selected_jefes" multiple #selectionJefesModel="ngModel">
+                    <app-select-check-all [model]="selectionJefesModel" [values]="options_jefes">
+                    </app-select-check-all>
+                    <mat-option *ngFor="let option of options_jefes" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <h2>Privilegios</h2>
+
+        </div>
+
+        <div class="pageSectionContentContainer  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <mat-radio-group #prioridad="ngModel" name="privilegios" [(ngModel)]="empleados.super" (change)="verificarPrivilegios()" aria-label="Privilegios de usuario" required>
+                <mat-radio-button [value]="3">Ninguno</mat-radio-button>
+                <mat-radio-button [value]="2">Confirmar Partes</mat-radio-button>
+                <mat-radio-button [value]="1">Editar Partes</mat-radio-button>
+                <mat-radio-button [value]="0">Confirmar y Editar Partes</mat-radio-button>
+            </mat-radio-group>
+
+        </div>
+        <!-- end si es operario -->
+
+        <div class="pageSectionContentContainer blueContainer col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+
+            <div class="buttonRow right ">
+                <button mat-raised-button class="primaryButton" (click)="editUser()" type="submit" [disabled]="!createNewUser.form.valid"><mat-icon class="iconButton">save</mat-icon>Guardar cambios</button>
+            </div>
+            <div *ngIf="!createNewUser.form.valid">
+                <p>
+                    Rellena todos los campos
+                </p>
+            </div>
+        </div>
+    </div>
+</form>

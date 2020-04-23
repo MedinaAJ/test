@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>Configurador de widgets</h1>
+<div mat-dialog-content>
+    <span>Altura:&nbsp;&nbsp;</span>
+    <mat-radio-group #height="ngModel" name="altura" [(ngModel)]="data.widget.config.altura" aria-label="Altura widget" required>
+        <mat-radio-button value="1x">Normal</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="2x">2x</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="3x">3x</mat-radio-button>&nbsp;&nbsp;
+    </mat-radio-group>
+    <br>
+    <span>Le afecta el date picker:&nbsp;&nbsp;</span>
+    <mat-radio-group #datepicker="ngModel" name="fecha_generica" [(ngModel)]="data.widget.config.fecha_generica" aria-label="Fecha genérica" required>
+        <mat-radio-button value="si">Si</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="no">No</mat-radio-button>&nbsp;&nbsp;
+    </mat-radio-group>
+    <p><span>Campos a mostrar:&nbsp;&nbsp;</span></p>
+    <!-- Eje y -->
+    <div style="background-color: #eee;" *ngFor="let element of data.widget.ejey.conexion; let i = index">
+        <div class="col-lg-1" style="float: right;">
+            <a (click)="removeEje(element)">
+                <mat-icon>close</mat-icon>
+            </a>
+        </div>
+        <mat-form-field>
+            <mat-select (selectionChange)="selectTest()" [(ngModel)]="data.widget.ejey.conexion[i]" placeholder="Seleccionar conexión" name="SelectCon" #SelectCon="ngModel">
+                <mat-option *ngFor="let conexion of data.conexiones; let j = index" [value]="{'name': conexion.name, 'test': conexion.test, 'credenciales': conexion.credenciales, 'index': j}">
+                    {{conexion.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.widget.ejey.conexion[i].index !== -1">
+            <mat-select (selectionChange)="selectTest()" [(ngModel)]="data.widget.ejey.conexion[i].tabla" placeholder="Seleccionar la tabla" name="SelectTab" #SelectTab="ngModel">
+                <mat-option *ngFor="let tabla of data.conexiones[data.widget.ejey.conexion[i].index].campos.tablas; let k = index" 
+                    [value]="{'name': tabla.name, 'real_name': tabla.real_name, 'campo_fecha': tabla.campo_fecha, 'index': k}">
+                    {{tabla.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.widget.ejey.conexion[i].tabla">
+            <mat-select placeholder="Seleccionar la columna" name="SelectCol" [(ngModel)]="data.widget.ejey.conexion[i].tabla.campo_tabla" #SelectCol="ngModel">
+                <mat-option *ngFor="let columna of data.conexiones[data.widget.ejey.conexion[i].index].campos.tablas[data.widget.ejey.conexion[i].tabla.index].columnas" [value]="columna">
+                    {{columna.campo_mostrar}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p><span>Conexion Seleccionada: {{data.widget.ejey.conexion[i].name}}</span>&nbsp;&nbsp;<span *ngIf="data.widget.ejey.conexion[i].tabla">Tabla Seleccionada: {{data.widget.ejey.conexion[i].tabla.name}}</span></p>
+    </div>
+    <a (click)="addEje()" 
+        style="
+            margin: auto;
+            display: block;
+            text-align: center;">
+        <button style="border-radius: 50px; padding: 14px; margin-bottom: 4px;" mat-raised-button ><mat-icon class="iconButton">add</mat-icon></button>
+    </a>
+
+    <br>
+    <span>Leyenda: &nbsp;&nbsp;</span>
+    <mat-radio-group #gen="ngModel" name="leyenda_generica" [(ngModel)]="data.widget.config.leyenda_generica" aria-label="Leyenda Genérica" required>
+        <mat-radio-button value="si">Si</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="no">No</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="generica">Genérica</mat-radio-button>&nbsp;&nbsp;
+    </mat-radio-group>
+    <br>
+    <span>Posición: &nbsp;&nbsp;</span>
+    <mat-radio-group #pos="ngModel" name="posicion" [(ngModel)]="data.widget.config.posicion" aria-label="Posición" required>
+        <mat-radio-button value="izq">Izquierda</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="up">Arriba</mat-radio-button>&nbsp;&nbsp;
+        <mat-radio-button value="down">Abajo</mat-radio-button>&nbsp;&nbsp;
+    </mat-radio-group>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="onNoClick()">Cancelar</button> -->
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Asignar</button>
+</div>
